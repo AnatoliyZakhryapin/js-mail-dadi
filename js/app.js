@@ -2,18 +2,22 @@
 
 // - Creare database con l'indirizzi mail registrati tramitte un array
 
-const usersMail = [];
+const usersMailDateBase = [];
 
 
 for (i=0; i < 100; i++) {
     let n = i + 1;
-    usersMail.push(`utente${n}@gmail.com`)
-    console.log(n, usersMail[i])
+    usersMailDateBase.push(`utente${n}@gmail.com`)
+    console.log(n, usersMailDateBase[i])
 }
 
-console.log(usersMail)
+console.log(usersMailDateBase)
 
 // - Creare la variaviele "mailUtente"
+
+let userMail = prompt("Qual'è il tuo indirizzo mai?")
+console.log(userMail)
+
 // - Chiedere ad uttente il suo indirizzo mail tramite prompt  e assegnare il sua valore alla variabile "mailUtente"
 // - Controllare se la variabile "mailUtente" è presente nella database tramite for
 //     - Se il valore è presente - stampare "L'accesso consestito"
