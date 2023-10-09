@@ -32,8 +32,33 @@ for (let i = 0; i < lenghtArray; i++) {
 }
 
 !isUserMail ? console.log("L'accesso NON è consestito") 
-    :  console.log("Benvenuto") 
+    :  console.log("Benvenuto");
 
-// - Creare la variabile con il numero random per pc "numeroPc"
-// - Creare la variavile con il numero random per utente "numeroUtente"
+// # DADI
+
+const randomNumber = Math.floor(Math.random() * (6 - 1) ) + 1;
+console.log("randomNumber", randomNumber)
+// - Creare la variabile con il numero random per pc "numberPc"
+let numberPc = Math.floor(Math.random() * (6 - 1) ) + 1;
+console.log("numberPC", numberPc)
+// - Creare la variavile con il numero random per utente "numberUtente"
+let numberUser =  Math.floor(Math.random() * (6 - 1) ) + 1;
+console.log("numberUser", numberUser)
 // - Confrontare i numeri e stabilire chi a piu punetggio
+let gamer1 = "PC";
+let gamer2 = "User";
+let vinner;
+
+// Controllo se i numeri sono ugali, in questo caso il valore viene riassegnato
+if (numberPc == numberUser) {
+    numberPc = Math.floor(Math.random() * (6 - 1) ) + 1;
+    numberUser =  Math.floor(Math.random() * (6 - 1) ) + 1;
+}
+
+if (numberPc > numberUser) {
+   vinner = gamer1;
+} else {
+    vinner = gamer2;
+}
+
+console.log(vinner);
