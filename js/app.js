@@ -36,24 +36,21 @@ for (let i = 0; i < lenghtArray; i++) {
 
 // # DADI
 
-const randomNumber = Math.floor(Math.random() * (6 - 1) ) + 1;
-console.log("randomNumber", randomNumber)
-// - Creare la variabile con il numero random per pc "numberPc"
-let numberPc = Math.floor(Math.random() * (6 - 1) ) + 1;
-console.log("numberPC", numberPc)
-// - Creare la variavile con il numero random per utente "numberUtente"
-let numberUser =  Math.floor(Math.random() * (6 - 1) ) + 1;
-console.log("numberUser", numberUser)
+// - Creazione delle variabili per i giocatori
+let numberPc;
+let numberUser;
+
+// - Assegnare il numero random alle variabile finche non sarrano diversi
+do {
+    numberPc = Math.floor(Math.random() * (6 - 1) ) + 1;
+    numberUser =  Math.floor(Math.random() * (6 - 1) ) + 1;
+  }
+  while (numberPc == numberUser);
+
 // - Confrontare i numeri e stabilire chi a piu punetggio
 let gamer1 = "PC";
 let gamer2 = "User";
 let vinner;
-
-// Controllo se i numeri sono ugali, in questo caso il valore viene riassegnato
-if (numberPc == numberUser) {
-    numberPc = Math.floor(Math.random() * (6 - 1) ) + 1;
-    numberUser =  Math.floor(Math.random() * (6 - 1) ) + 1;
-}
 
 if (numberPc > numberUser) {
    vinner = gamer1;
@@ -61,4 +58,6 @@ if (numberPc > numberUser) {
     vinner = gamer2;
 }
 
+console.log("numberPC", numberPc)
+console.log("numberUser", numberUser)
 console.log(vinner);
