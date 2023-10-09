@@ -1,43 +1,5 @@
 // # js-mail-dadi
 
-// - Creare database con l'indirizzi mail registrati tramitte un array
-
-const usersMailDateBase = [];
-
-
-for (i=0; i < 100; i++) {
-    let n = i + 1;
-    usersMailDateBase.push(`utente${n}@gmail.com`)
-}
-
-console.log( usersMailDateBase)
-// - Creare la variaviele "userMail"
-// +
-// - Chiedere ad uttente il suo indirizzo mail tramite prompt  e assegnare il
-
-let userMail = prompt("Qual'è il tuo indirizzo mai?")
-
-// - Controllare se la variabile "userMail" è presente nella database tramite for
-// + 
-//     - Se il valore è presente - stampare "L'accesso consestito"
-//     ALTRIMENTI - "L'acesso vietato"
-
-let lenghtArray = usersMailDateBase.length;
-let isUserMail;
-
-for (let i = 0; i < lenghtArray; i++) {
-    if (usersMailDateBase[i] === userMail) {
-       isUserMail = true;
-    }
-}
-
-!isUserMail ? console.log("L'accesso NON è consestito") 
-    :  console.log("Benvenuto");
-
-// # DADI
-
-
-
 // Creazione database per imagine
 const imageBase = [
     "./img/dado1.png", 
@@ -48,11 +10,97 @@ const imageBase = [
     "./img/dado6.png",
 ];
 
-let player1DOMElement = document.getElementById("imagePlayer1");
-let player2DOMElement = document.getElementById("imagePlayer2");
-let btnStartDOMElement = document.getElementById("start");
+// - DOM Element
+let benvenutoDOMElement = document.getElementById("benvenuto");
+let cardLoginDOMElement = document.getElementById("card-login");
+let inputMailDOMElement = document.getElementById("input-mail");
+let alertMessegeDOMElement = document.getElementById("alert-messege");
+let alertNotAccessDOMElement = document.getElementById("alert-not-access");
+let alertNeedLoginDOMElement = document.getElementById("alert-need-login");
+let sectionGameDOMElement = document.getElementById("section-game");
+
+let namePcDOMElement = document.getElementById("name-pc");
+let nameUserDOMElement = document.getElementById("name-user");
+let imagePcDOMElement = document.getElementById("image-pc");
+let imageUserDOMElement = document.getElementById("image-user");
 let vinnertDOMElement = document.getElementById("vinner");
 
+let btnLoginDOMElement = document.getElementById("login");
+let btnExitDOMElement = document.getElementById("exit");
+let btnGametnDOMElement = document.getElementById("game-dadi");
+let btnStartDOMElement = document.getElementById("start");
+let btnResetDOMElement = document.getElementById("reset");
+
+// - Creare database con l'indirizzi mail registrati tramitte un array
+const usersMailDateBase = [];
+for (i=0; i < 100; i++){
+    let n = i + 1;
+    usersMailDateBase.push(`utente${n}@gmail.com`)
+}
+let lenghtArray = usersMailDateBase.length; // - Lungezza della dataBase
+
+// - Login utente
+btnLoginDOMElement.addEventListener("click", function(){
+
+    // - Mail inserita dal utente
+    let userMail = inputMailDOMElement.value;
+
+    // - Controllo se esiste utente
+    let isUserMail; // - Prendera il valore true se utente esiste nella database
+    for (let i = 0; i < lenghtArray; i++) {
+        if (usersMailDateBase[i] === userMail){
+            isUserMail = true;
+        }
+    }
+
+    // - Se utente è logato ci restituisce nome utente(indirizzo mail)
+    let userLogged;
+    if (isUserMail) {
+        userLogged = userMail
+    } else {
+        userLogged = "";
+    } 
+
+    // - Messaggio di benvenuto
+    let benvenutoMessage = benvenutoDOMElement.innerHTML += " " + userLogged;
+
+    // - Recupero il valore del input
+    let inputValue = inputMailDOMElement.value;
+    
+    // - Tipo di messaggio da mostrare in base ai dati inseriti
+    let alertMessege;
+    if (!inputValue) {
+        alertMessege = alertNeedLoginDOMElement.classList.remove("d-none") + alertNotAccessDOMElement.classList.add("d-none"); 
+    } else {
+        alertMessege = alertNotAccessDOMElement.classList.remove("d-none") + alertNeedLoginDOMElement.classList.add("d-none");
+    }
+
+    // - Se user mail non esiste compare alert, altimenti ti da benvenuto e     permette di gioccare
+    !isUserMail 
+        ? alertMessegeDOMElement.classList.remove("d-none") + alertMessege
+        : cardLoginDOMElement.classList.add("d-none") 
+            + btnExitDOMElement.classList.remove("d-none")
+            + benvenutoDOMElement.classList.remove("d-none")
+            + benvenutoDOMElement.classList.add("d-block")
+            + benvenutoMessage
+            + alertMessegeDOMElement.classList.add("d-none")
+            + sectionGameDOMElement.classList.remove("d-none")
+    
+    // - Assegnare il nome dei giocatori 
+    var namePc = "PC";
+    var nameUser = "User";
+    namePcDOMElement.innerHTML = namePc;
+    nameUserDOMElement.innerHTML = nameUser;
+})
+
+// - Resete alert messege
+btnResetDOMElement.addEventListener("click", function (){
+    alertMessegeDOMElement.classList.add("d-none")
+    alertNeedLoginDOMElement.classList.add("d-none");
+    alertNotAccessDOMElement.classList.add("d-none"); 
+})
+
+// - star game
 btnStartDOMElement.addEventListener("click", function (){
    // - Creazione delle variabili per i giocatori
     let numberPc;
@@ -65,30 +113,22 @@ btnStartDOMElement.addEventListener("click", function (){
     }
     while (numberPc == numberUser);
 
-    // - Confrontare i numeri e stabilire chi a piu punetggio
-    let gamer1 = "PC";
-    let gamer2 = "User";
-    let vinner;
-
-    if (numberPc > numberUser) {
-    vinner = gamer1;
-    vinnertDOMElement.innerHTML = vinner;    
+    // - Cambiare imagini in base hai numeri
+    let imagePc = imageBase[numberPc-1];
+    let imageUser = imageBase[numberUser-1];
+    imagePcDOMElement.src = imagePc;
+    imageUserDOMElement.src = imageUser;
+ 
+    // - Confrontare i numeri e stabilire chi ha piu punetggio
+    let namePc = "PC";
+    let nameUser = "User";
+    if (numberPc > numberUser){
+        vinnertDOMElement.innerHTML = `Ha vinto ${namePc}`; 
+        namePcDOMElement.className = "fw-bold" + " " + "text-success";nameUserDOMElement.className = "fw-bold" + " " + "text-danger";   
     } else {
-        vinner = gamer2;
-        vinnertDOMElement.innerHTML = vinner;  
+        vinnertDOMElement.innerHTML = `Ha vinto ${nameUser}`;
+        nameUserDOMElement.className = "fw-bold" + " " + " text-success";
+        namePcDOMElement.className ="fw-bold" + " " + " text-danger";    
     }
-
-    console.log("numberPC", numberPc)
-    console.log("numberUser", numberUser)
-    console.log(vinner);
-    
-    let imagePlayer1 = imageBase[numberPc-1];
-    let imagePlayer2 = imageBase[numberUser-1];
-   
-    player1DOMElement.src = imagePlayer1;
-    player2DOMElement.src = imagePlayer2;
 })
-
-console.log(imagePlayer1)
-console.log(imagePlayer2)
 
